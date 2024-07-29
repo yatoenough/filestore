@@ -1,3 +1,4 @@
 /build
-/configs/*.env
-!/configs/example.env
+/configs/*
+!example.*
+/.env

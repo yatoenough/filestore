@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/yatoenough/filestore/internal/pkg"
 
 func main() {
-	fmt.Println("Hello, World!")
+	pkg.New()
 }

@@ -1,11 +1,12 @@
 BINARY_NAME=filestorage
 
+.PHONY: build
 build:
-	go build -o build/${BINARY_NAME} cmd/filestorage/main.go
+	go build -o build/${BINARY_NAME}.exe cmd/filestorage/main.go
 
-run: build
-	./${BINARY_NAME}
+run:build
+	./build/${BINARY_NAME}.exe
 
 clean:
 	go clean
-	rm build/${BINARY_NAME}
+	rd /s /q "./build"
