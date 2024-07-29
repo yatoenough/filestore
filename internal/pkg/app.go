@@ -3,18 +3,28 @@ package pkg
 import (
 	"log"
 
+	"github.com/labstack/echo/v4"
+	"github.com/yatoenough/filestore/internal/app/api/http/server"
 	"github.com/yatoenough/filestore/internal/app/config"
 )
 
 type App struct {
-	cfg *config.Config
+	c *config.Config
+	s *echo.Echo
 }
 
-func New() (*App, error) {
+func New() *App {
 	a := &App{}
 
-	a.cfg = config.MustLoad()
-	log.Print(a.cfg)
+	a.c = config.MustLoad()
+	a.s = server.New()
 
-	return a, nil
+	return a
+}
+
+func (a *App) Run() {
+	err := a.s.Start(a.c.Address)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

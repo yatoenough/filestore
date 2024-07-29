@@ -1,13 +1,8 @@
 # Env mode (local, production, development)
 env: local
 
-# Path to PostgreSQL db
+# Connection string to PostgreSQL db
 pg_connection_string: 'postgres://postgres:password@localhost/dbname'
 
-# HTTP server config
-server_config:
-  address: 'localhost:3000'
-  # Timeout for response reading and writing
-  req_timeout: 4s
-  # Lifetime of connection with client
-  idle_timeout: 60s
+# Server address
+address: 'localhost:3000'
