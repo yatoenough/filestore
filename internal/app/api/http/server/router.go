@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func RegisterRoutes(e *echo.Group) {
-	e.GET("/ping", func(c echo.Context) error {
+func RegisterRoutes(group *echo.Group) {
+	group.GET("/ping", func(c echo.Context) error {
 		c.JSON(http.StatusOK, map[string]string{
 			"message": "pong",
 		})

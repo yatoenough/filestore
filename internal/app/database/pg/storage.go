@@ -1,6 +1,8 @@
 package pg
 
 import (
+	"log"
+
 	_ "github.com/jackc/pgx/stdlib"
 	"github.com/jmoiron/sqlx"
 )
@@ -16,12 +18,19 @@ func New(connStr string) (*Storage, error) {
 	}
 
 	if err := db.Ping(); err != nil {
+		db.Close()
 		return nil, err
 	}
 
 	return &Storage{db: db}, nil
 }
 
-func (s *Storage) Close() {
-	s.db.Close()
+func (s *Storage) Close() error {
+	log.Println("Disconnecting database...")
+	err := s.db.Close()
+	if err != nil {
+		return err
+	}
+	log.Println("Disconnected")
+	return nil
 }
