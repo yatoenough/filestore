@@ -15,10 +15,7 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	go func() {
-		app.Run()
-	}()
-
+	go app.Run()
 	<-ctx.Done()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)

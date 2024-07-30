@@ -34,12 +34,11 @@ func New() *App {
 
 func (a *App) Run() {
 	if err := a.srv.Start(a.cfg.Address); err != nil && err == http.ErrServerClosed {
-		log.Println("Shutting down server...")
+		log.Println("Shutting down...")
 	}
 }
 
-func (a *App) Stop(ctx context.Context) error {
-	log.Println("Stopping application...")
+func (a *App) Stop(ctx context.Context) {
 	err := a.db.Close()
 	if err != nil {
 		log.Fatal(err)
@@ -49,6 +48,4 @@ func (a *App) Stop(ctx context.Context) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Application stopped gracefully")
-	return nil
 }
