@@ -9,9 +9,9 @@ type Storage struct {
 	db *sqlx.DB
 }
 
-func New(connStr string) (*Storage, error) {
+func New(connStr string) *Storage {
 	db := sqlx.MustConnect("pgx", connStr)
-	return &Storage{db: db}, nil
+	return &Storage{db: db}
 }
 
 func (s *Storage) Close() error {

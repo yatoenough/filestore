@@ -17,13 +17,11 @@ type App struct {
 
 func New() *App {
 	a := &App{}
+
 	a.cfg = config.MustLoad()
-	db, err := pg.New(a.cfg.ConnStr)
-	if err != nil {
-		log.Fatal(err)
-	}
-	a.db = db
+	a.db = pg.New(a.cfg.ConnStr)
 	a.srv = server.New(a.cfg)
+
 	return a
 }
 
