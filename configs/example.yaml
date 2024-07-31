@@ -1,5 +1,5 @@
 # Env mode (local, production, development)
-env: local
+env_mode: local
 
 # Connection string to PostgreSQL db
 pg_connection_string: 'postgres://postgres:password@localhost/dbname'

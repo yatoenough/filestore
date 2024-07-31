@@ -1,0 +1,5 @@
+{
+  "envMode": "local",
+  "pgConnectionString": "postgres://postgres:password@localhost/dbname",
+  "address": "localhost:3000"
+}
