@@ -3,9 +3,7 @@ package pkg
 import (
 	"context"
 	"log"
-	"net/http"
 
-	"github.com/labstack/echo/v4"
 	"github.com/yatoenough/filestore/internal/app/api/http/server"
 	"github.com/yatoenough/filestore/internal/app/config"
 	"github.com/yatoenough/filestore/internal/app/database/pg"
@@ -14,28 +12,23 @@ import (
 type App struct {
 	cfg *config.Config
 	db  *pg.Storage
-	srv *echo.Echo
+	srv *server.Server
 }
 
 func New() *App {
 	a := &App{}
 	a.cfg = config.MustLoad()
-
 	db, err := pg.New(a.cfg.ConnStr)
 	if err != nil {
 		log.Fatal(err)
 	}
 	a.db = db
-
-	a.srv = server.New()
-
+	a.srv = server.New(a.cfg)
 	return a
 }
 
 func (a *App) Run() {
-	if err := a.srv.Start(a.cfg.Address); err != nil && err == http.ErrServerClosed {
-		log.Println("Shutting down...")
-	}
+	a.srv.Start()
 }
 
 func (a *App) Stop(ctx context.Context) {
@@ -44,7 +37,7 @@ func (a *App) Stop(ctx context.Context) {
 		log.Fatal(err)
 	}
 
-	err = a.srv.Shutdown(ctx)
+	err = a.srv.Stop(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
