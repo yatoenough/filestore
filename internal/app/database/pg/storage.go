@@ -3,11 +3,12 @@ package pg
 import (
 	_ "github.com/jackc/pgx/stdlib"
 	"github.com/jmoiron/sqlx"
+	"github.com/yatoenough/filestore/internal/app/database/repository"
 )
 
 type Storage struct {
 	db              *sqlx.DB
-	imageRepository *ImageRepository
+	imageRepository *repository.ImageRepository
 }
 
 func New(connStr string) *Storage {
@@ -23,14 +24,12 @@ func (s *Storage) Close() error {
 	return nil
 }
 
-func (s *Storage) Image() *ImageRepository {
+func (s *Storage) Image() *repository.ImageRepository {
 	if s.imageRepository != nil {
 		return s.imageRepository
 	}
 
-	s.imageRepository = &ImageRepository{
-		storage: s,
-	}
+	s.imageRepository = repository.NewImageRepo(s.db)
 
 	return s.imageRepository
 }
