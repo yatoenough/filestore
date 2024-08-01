@@ -44,3 +44,12 @@ func (r *ImageRepository) FindById(id int64) (*model.Image, error) {
 
 	return &image, nil
 }
+
+func (r *ImageRepository) Delete(id int64) error {
+	_, err := r.storage.db.Exec("DELETE FROM images WHERE id = $1", id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
